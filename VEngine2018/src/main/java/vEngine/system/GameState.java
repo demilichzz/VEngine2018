@@ -6,9 +6,11 @@
 package vEngine.system;
 
 import lombok.Data;
+import vEngine.display.VDisplay;
 import vEngine.fsm.FSMclass;
 import vEngine.fsm.FSMconst;
 import vEngine.fsm.FSMstate;
+import vEngine.global.Debug;
 
 /**
  * @author Demilichzz
@@ -30,6 +32,7 @@ public class GameState {
     // singleton define
     private GameState() {
         setGsRefreshTime(10);
+        Debug.DebugSimpleMessage("GameState初始化完成");
     }
 
     private static volatile GameState instance = new GameState();
@@ -260,7 +263,7 @@ public class GameState {
     public void Render() {
         // TODO 每帧进行的渲染
         //System.out.println(System.currentTimeMillis());
-        ve.renderer.render(); //绘制场景
+        VDisplay.getInstance().render(); //绘制场景
         //Display.update();		//更新lwjgl的显示区域
         renderCount++; //渲染计数+1
     }
@@ -293,7 +296,7 @@ public class GameState {
         // TODO 由仿真器控制的游戏状态更新过程
         runTime++;
         if (runTime % 100 == 0) { //每100次更新则计算FPS
-            Display.setTitle("FPS:" + renderCount);
+            VDisplay.getInstance().setWindowTitle("FPS:" + renderCount);
             renderCount = 0;
         }
         //gs_tp.process(); //处理Timer

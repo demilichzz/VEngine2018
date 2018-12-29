@@ -30,6 +30,7 @@ import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryStack;
 import lombok.Data;
+import vEngine.global.Debug;
 import vEngine.global.Global;
 import vEngine.system.VEngine;
 
@@ -59,6 +60,7 @@ public class VDisplay {
     private VDisplay() {
         newCamera = new VCamera();
         lightcontroller = new VLightControl();
+        Debug.DebugSimpleMessage("Display初始化完成");
     }
 
     private static volatile VDisplay instance = new VDisplay();
@@ -148,6 +150,26 @@ public class VDisplay {
 
     }
 
+    /**   
+     * @Title: checkWindow   
+     * @Description: isCloseRequested
+     * @param: @return      
+     * @return: boolean      
+     * @throws   
+     */
+    public boolean checkWindow() {
+        Debug.DebugSimpleMessage("" + GLFW.glfwWindowShouldClose(window));
+        return GLFW.glfwWindowShouldClose(window);
+    }
+
+    public void destroyWindow() {
+        GLFW.glfwDestroyWindow(window);
+    }
+
+    public void setWindowTitle(String title) {
+        GLFW.glfwSetWindowTitle(window, title);
+    }
+
     public void renderPrepare() {
         // TODO 渲染预处理，以保证渲染机制正确运行
         // GL11.glClearStencil(0);
@@ -179,6 +201,7 @@ public class VDisplay {
 
     public void render() {
         // TODO 在每帧游戏窗体更新时渲染当前游戏场景
+        Debug.DebugSimpleMessage("VDisplay.Render");
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // |GL_STENCIL_BUFFER_BIT); // clear the
                                                             // framebuffer
 

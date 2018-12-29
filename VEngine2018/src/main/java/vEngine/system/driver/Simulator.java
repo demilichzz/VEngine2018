@@ -3,17 +3,18 @@
  */
 package vEngine.system.driver;
 
+import lombok.Data;
+import vEngine.display.VDisplay;
+import vEngine.global.Debug;
 import vEngine.global.Global;
 import vEngine.system.GameState;
-import vEngine.system.VEngine;
 
 /**
  * @author Demilichzz
  *
  */
+@Data
 public class Simulator implements Runnable {
-    protected VEngine ve;
-    private GameState gs;
     private long lastLoopTime = 0;
     private long delta; // 计算两次更新间隔时间
     private int time; // 计算delta超过仿真器应更新时间时,需额外执行的次数
@@ -28,10 +29,22 @@ public class Simulator implements Runnable {
     private int updaterate = 10; // 更新率
     private int timeresidue; // 当前时间值余数
 
-    public Simulator(VEngine ve) {
-        this.ve = ve;
-        gs = ve.gs;
-        updaterate = gs.getMSecond();
+    private Simulator() {
+        updaterate = GameState.getInstance().getMSecond();
+        Debug.DebugSimpleMessage("Simulator初始化完成");
+    }
+
+    private static volatile Simulator instance = new Simulator();
+
+    public static Simulator getInstance() {
+        if (instance == null) {
+            synchronized (Simulator.class) {
+                if (instance == null) {
+                    instance = new Simulator();
+                }
+            }
+        }
+        return instance;
     }
 
     /*
@@ -42,26 +55,25 @@ public class Simulator implements Runnable {
     @Override
     public void run() {
         // TODO 仿真器线程运行函数
-        ve.renderer.initGL(); // 初始化OpenGL参数
-        ve.initResource(); // 初始化资源，字体
-        ve.gs.Init();
-        ve.renderer.renderPrepare();
-        gs.Render();
-        ve.renderer.renderPrepare();
+        VDisplay.getInstance().initGL(); // 初始化OpenGL参数
+        //ve.initResource(); // 初始化资源，字体
+        GameState.getInstance().Init();
+        VDisplay.getInstance().renderPrepare();
+        GameState.getInstance().Render();
         // renderGL();
         lastLoopTime = System.currentTimeMillis();
         rTime = System.currentTimeMillis();
         lastRenderTime = System.currentTimeMillis();
         lastrender = lastRenderTime;
         renderRate = 1000.0 / Global.FPS;
-        while (!glfwWindowShouldClose(window)) {
+        while (!VDisplay.getInstance().checkWindow()) {
             // Debug.DebugSimpleMessage("check");
             // if(FileIO.lock.exists()){ //检查锁
             // FileIO.lock.setReadOnly();
             // }
             lastLoopTime = lastLoopTime + updaterate; // 将上次更新时间向后移
             // Debug.DebugSimpleMessage("正常帧");
-            gs.updateState();
+            GameState.getInstance().updateState();
             try {
                 Thread.sleep(0); // 释放更新线程，并进行渲染
             } catch (InterruptedException e) {
@@ -71,7 +83,7 @@ public class Simulator implements Runnable {
                 lastRenderTime = (long) lastrender;
                 // Debug.DebugSimpleMessage("render");
                 // renderGL();
-                gs.Render(); // 进行渲染
+                GameState.getInstance().Render(); // 进行渲染
                 try {
                     Thread.sleep(0); // 释放更新线程
                 } catch (InterruptedException e) {
@@ -79,7 +91,7 @@ public class Simulator implements Runnable {
                 while (lastLoopTime + updaterate <= System.currentTimeMillis()) { // 补帧
                     // Debug.DebugSimpleMessage("补帧");
                     lastLoopTime = lastLoopTime + updaterate;
-                    gs.updateState();
+                    GameState.getInstance().updateState();
                 }
             }
             try {
@@ -95,7 +107,7 @@ public class Simulator implements Runnable {
         /*
          * if(gs.lua_core!=null){ gs.lua_core.destroyScript(); }
          */
-        Display.destroy();
+        VDisplay.getInstance().destroyWindow();
     }
     /*
      * public void run() { // TODO Auto-generated method stub gs.Render(); //初始渲染 lastLoopTime =

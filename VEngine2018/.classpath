@@ -22,7 +22,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/DevelopTools/lwjgl-3.2.1/lwjgl/lwjgl-natives-windows.jar"/>
-	<classpathentry kind="lib" path="D:/DevelopTools/lwjgl-3.2.1/lwjgl-opengl/lwjgl-opengl-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/WorkSpace/VEngine2018/VEngine2018/lib/lwjgl-natives-windows.jar"/>
+	<classpathentry kind="lib" path="D:/WorkSpace/VEngine2018/VEngine2018/lib/lwjgl-opengl-natives-windows.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

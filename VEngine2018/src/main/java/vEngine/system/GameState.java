@@ -5,6 +5,7 @@
  */
 package vEngine.system;
 
+import lombok.Data;
 import vEngine.fsm.FSMclass;
 import vEngine.fsm.FSMconst;
 import vEngine.fsm.FSMstate;
@@ -14,10 +15,10 @@ import vEngine.fsm.FSMstate;
  *
  *         2013-6-8
  */
+@Data
 public class GameState {
-    protected VEngine ve; //引擎主体
-    protected int time = 10; // 仿真器更新一次经过的时间,单位ms
-    public int runTime = 0; // 活动游戏状态更新的次数
+    private int gsRefreshTime = 10; // 仿真器更新一次经过的时间,单位ms
+    private int runTime = 0; // 活动游戏状态更新的次数
     //protected HashMap<String,VStage> stagelist = new HashMap<String,VStage>();
     protected String currentstage;
     public FSMclass fsm_GS; //主体GS的状态机
@@ -26,27 +27,39 @@ public class GameState {
     //public VUI uiparent;
     //public LuaScript lua_core;	//lua核心
 
-    public GameState(VEngine ve, int t) {
-        this.ve = ve;
-        setTime(t);
-        // Init();
+    // singleton define
+    private GameState() {
+        setGsRefreshTime(10);
     }
 
-    private void setTime(int t) {
-        if (t > 0) {
-            time = t;
+    private static volatile GameState instance = new GameState();
+
+    public static GameState getInstance() {
+        if (instance == null) {
+            synchronized (GameState.class) {
+                if (instance == null) {
+                    instance = new GameState();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public void setGsRefreshTime(int gsRefreshTime) {
+        if (gsRefreshTime > 0) {
+            this.gsRefreshTime = gsRefreshTime;
         } else
-            time = 1;
+            this.gsRefreshTime = 1;
     }
 
     public double getSecond() { // 
         // TODO 返回仿真器每次更新花费的时间,单位为秒
-        return time * 0.001;
+        return gsRefreshTime * 0.001;
     }
 
     public int getMSecond() { // 
         // TODO 返回仿真器每次更新花费的时间,单位为毫秒
-        return time;
+        return gsRefreshTime;
     }
 
     public void Init() {

@@ -29,6 +29,7 @@ import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryStack;
+import lombok.Data;
 import vEngine.global.Global;
 import vEngine.system.VEngine;
 
@@ -37,6 +38,7 @@ import vEngine.system.VEngine;
  *
  *         2013-6-8
  */
+@Data
 public class VDisplay {
     protected VEngine ve;
     public float x = 0;
@@ -59,7 +61,7 @@ public class VDisplay {
         lightcontroller = new VLightControl();
     }
 
-    private static volatile VDisplay instance = null;
+    private static volatile VDisplay instance = new VDisplay();
 
     public static VDisplay getInstance() {
         if (instance == null) {
@@ -70,13 +72,6 @@ public class VDisplay {
             }
         }
         return instance;
-    }
-
-    public VDisplay(VEngine e) {
-        ve = e;
-        newCamera = new VCamera();
-        lightcontroller = new VLightControl();
-        // initGL();
     }
 
     public void initGL() {

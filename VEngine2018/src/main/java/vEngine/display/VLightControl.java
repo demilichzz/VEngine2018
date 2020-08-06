@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @author Demilichzz 光照控制类，在显示类中应用相应生成的光照控制对象的初始化及调节光照参数的函数 2013-6-18
  */
 package vEngine.display;

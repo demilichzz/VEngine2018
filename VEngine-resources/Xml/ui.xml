@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<ui id="ui_test">
+		<imagestr>button_100x50.png</imagestr>
+		<locX>100</locX>
+		<locY>100</locY>
+		<parentID>uiparent</parentID>
+		<transparency>1</transparency>
+		<scale>1</scale>
+		<visible>true</visible>
+		<enable>true</enable>
+		<textlist>
+			<text>
+				<textString>test1</textString>
+				<textId>2</textId>
+			</text>
+			<text>
+				<textString>test2</textString>
+				<textId>2</textId>
+			</text>
+		</textlist>
+	</ui>
+	<ui id="ui_test2">
+		<imagestr>button_100x50.png</imagestr>
+		<locX>100</locX>
+		<locY>200</locY>
+		<parentID>uiparent</parentID>
+		<transparency>1</transparency>
+		<scale>1</scale>
+		<visible>true</visible>
+		<enable>true</enable>
+	</ui>
+	<ui id="ui_test3">
+		<imagestr>button_100x50.png</imagestr>
+		<locX>100</locX>
+		<locY>300</locY>
+		<parentID>uiparent</parentID>
+		<transparency>1</transparency>
+		<scale>1</scale>
+		<visible>true</visible>
+		<enable>true</enable>
+	</ui>
+</root>

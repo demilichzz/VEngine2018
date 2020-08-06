@@ -1,4 +1,4 @@
-﻿package vEngine.fsm;
+package vEngine.fsm;
 
 public class FSMstate {
     private int numofTransition;

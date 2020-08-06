@@ -5,29 +5,45 @@
  */
 package vEngine.system;
 
+import org.newdawn.slick.Color;
+
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import vEngine.controller.VGameController;
 import vEngine.display.VDisplay;
+import vEngine.display.VText;
 import vEngine.fsm.FSMclass;
 import vEngine.fsm.FSMconst;
 import vEngine.fsm.FSMstate;
 import vEngine.global.Debug;
+import vEngine.global.Fontconst;
+import vEngine.global.Global;
+import vEngine.interfaces.VRenderableInterface;
+import vEngine.ui.VUI;
 
 /**
  * @author Demilichzz
  *
  *         2013-6-8
  */
-@Data
 public class GameState {
     private int gsRefreshTime = 10; // 仿真器更新一次经过的时间,单位ms
     private int runTime = 0; // 活动游戏状态更新的次数
     //protected HashMap<String,VStage> stagelist = new HashMap<String,VStage>();
-    protected String currentstage;
     public FSMclass fsm_GS; //主体GS的状态机
     //public VTimerProcessor gs_tp;
     public int renderCount = 0;
     //public VUI uiparent;
     //public LuaScript lua_core;	//lua核心
+    public VRenderableInterface t;
+    
+    @Getter
+    @Setter
+    protected EntityManager entityManager; 	//游戏实体管理器，控制可渲染实体及可更新实体的处理
+    @Getter
+    @Setter
+    protected VGameController gameController;	//控制器
 
     // singleton define
     private GameState() {
@@ -77,11 +93,12 @@ public class GameState {
         //gs_tp = new VTimerProcessor();
         //GameData.preinitGameData();
         InitFSM();
+        InitGSUpdateProcessor();
+        
         //InitLuaScript();
         //InitUI();
 
         //InitStage();
-
         //GameData.initGameData();
         //initLuaGetEntities();
         //GlobalEvent.startInstance();
@@ -95,6 +112,11 @@ public class GameState {
         //gs_tp = new VTimerProcessor();
     }
 
+    private void InitGSUpdateProcessor()
+    {
+    	// TODO 初始化GS更新器
+    	entityManager = new EntityManager();
+    }
     private void InitFSM() {
         // TODO 初始化GS的状态机
         fsm_GS = new FSMclass(FSMconst.GS_GAME);
@@ -263,16 +285,18 @@ public class GameState {
     public void Render() {
         // TODO 每帧进行的渲染
         //System.out.println(System.currentTimeMillis());
-        VDisplay.getInstance().render(); //绘制场景
+    	VDisplay disp = VDisplay.getInstance();
+    	disp.render(); //绘制场景
         //Display.update();		//更新lwjgl的显示区域
         renderCount++; //渲染计数+1
     }
 
     public void drawScene() {
+    	entityManager.draw();
         //uiparent.drawUI();
     }
 
-    public void renderGL() {
+    public void renderGLTest() {
         /*		// Clear The Screen And The Depth Buffer
         		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
         		// R,G,B,A Set The Color To Blue One Time Only
@@ -301,11 +325,10 @@ public class GameState {
         }
         //gs_tp.process(); //处理Timer
         //processInput();
+        gameController.controllerUpdate();
+        entityManager.update();
         switch (fsm_GS.GetCurrentState()) {
             case FSMconst.GS_GAME: {
-                if (currentstage != null) {
-                    //stagelist.get(currentstage).updateStage(); //处理当前stage更新
-                }
                 break;
             }
             case FSMconst.GS_PAUSE: {
@@ -315,6 +338,7 @@ public class GameState {
 
             }
         }
+        
         //uiparent.updateUI();
         //--------GameState Update-------------------------------
 

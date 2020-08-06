@@ -1,5 +1,10 @@
 package vEngine.system;
 
+import vEngine.controller.VGameController;
+import vEngine.display.VDisplay;
+import vEngine.global.Fontconst;
+import vEngine.global.Imageconst;
+import vEngine.global.VPropertiesLoader;
 import vEngine.system.driver.Simulator;
 
 /**
@@ -9,37 +14,45 @@ import vEngine.system.driver.Simulator;
  */
 
 public class VEngine {
-    public static VEngine newgame;
+	public static VEngine newgame;
 
-    public VEngine() {
-        //Init();
-    }
+	public VEngine() {
+		// Init();
+	}
 
-    public static void main(String[] args) {
-        //new VEngine().start();
-        newgame = new VEngine();
-        //GlobalEvent.initEvent();
-        newgame.gameloop();
-    }
+	private static volatile VEngine instance = new VEngine();
 
-    public void Init() {
-        // TODO 初始化游戏状态和仿真器以运行游戏状态更新与渲染逻辑 
-        //s = new Simulator(this);
-        //editframe = new JEditPanelFrame();
-        //mcontroller = new VMouseController();
-        //kcontroller = new VKeyController();
-        //renderer = new VDisplay(this);
-        //gs.Init();
-    }
+	public static VEngine getInstance() {
+		if (instance == null) {
+			// synchronized (Simulator.class) {
+			// if (instance == null) {
+			instance = new VEngine();
+			// }
+			// }
+		}
+		return instance;
+	}
 
-    private void gameloop() {
-        // TODO Auto-generated method stub
-        new Thread(Simulator.getInstance()).start();
-    }
+	public static void main(String[] args) {
+		// new VEngine().start();
+		// GlobalEvent.initEvent();
+		getInstance().gameloop();
+	}
 
-    public void initResource() {
-        //Imageconst.Init();
-        //Fontconst.Init();
-        //CharacterConst.Init();
-    }
+	public void gameloop() {
+		// TODO Auto-generated method stub
+		// getInstance().initResource();
+		new Thread(Simulator.getInstance(this)).start();
+	}
+
+	public void initResource() {
+		VPropertiesLoader.init();
+		Fontconst.Init();
+		VDisplay.getInstance().initGL(); // 初始化OpenGL参数
+		Imageconst.Init(); // 初始化资源，字体
+		GameState.getInstance().Init();
+		// VDisplay.getInstance().renderPrepare();
+		GameState.getInstance().Render();
+		GameState.getInstance().setGameController(VGameController.getInstance());
+	}
 }

@@ -1,4 +1,4 @@
-﻿package vEngine.fsm;
+package vEngine.fsm;
 
 import java.util.*;
 

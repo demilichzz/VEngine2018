@@ -1,13 +1,13 @@
-﻿/**
+/**
  * 文件名称：Simulator.java 类路径：driver 描述：TODO 仿真器 作者：Demilichzz 时间：2011-10-26上午08:31:34 版本：Ver 1.0
  */
 package vEngine.system.driver;
 
 import lombok.Data;
 import vEngine.display.VDisplay;
-import vEngine.global.Debug;
-import vEngine.global.Global;
+import vEngine.global.*;
 import vEngine.system.GameState;
+import vEngine.system.VEngine;
 
 /**
  * @author Demilichzz
@@ -28,21 +28,24 @@ public class Simulator implements Runnable {
 
     private int updaterate = 10; // 更新率
     private int timeresidue; // 当前时间值余数
+    
+    protected VEngine ve;
 
-    private Simulator() {
+    private Simulator(VEngine ve) {
+    	this.ve = ve;
         updaterate = GameState.getInstance().getMSecond();
         Debug.DebugSimpleMessage("Simulator初始化完成");
     }
 
-    private static volatile Simulator instance = new Simulator();
+    private static volatile Simulator instance = null;
 
-    public static Simulator getInstance() {
+    public static Simulator getInstance(VEngine ve) {
         if (instance == null) {
-            synchronized (Simulator.class) {
-                if (instance == null) {
-                    instance = new Simulator();
-                }
-            }
+           // synchronized (Simulator.class) {
+             //   if (instance == null) {
+                    instance = new Simulator(ve);
+               // }
+            //}
         }
         return instance;
     }
@@ -55,11 +58,7 @@ public class Simulator implements Runnable {
     @Override
     public void run() {
         // TODO 仿真器线程运行函数
-        VDisplay.getInstance().initGL(); // 初始化OpenGL参数
-        //ve.initResource(); // 初始化资源，字体
-        GameState.getInstance().Init();
-        VDisplay.getInstance().renderPrepare();
-        GameState.getInstance().Render();
+    	ve.initResource();
         // renderGL();
         lastLoopTime = System.currentTimeMillis();
         rTime = System.currentTimeMillis();
@@ -76,7 +75,8 @@ public class Simulator implements Runnable {
             GameState.getInstance().updateState();
             try {
                 Thread.sleep(0); // 释放更新线程，并进行渲染
-            } catch (InterruptedException e) {
+            } catch (InterruptedException e) 
+            {
             }
             while (lastRenderTime + renderRate <= System.currentTimeMillis()) { // 如果上次渲染时间+每帧时间<=当前时间s
                 lastrender = lastrender + renderRate; // 更新上次渲染时间

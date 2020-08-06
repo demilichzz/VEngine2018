@@ -1,37 +1,24 @@
-﻿/**
+/**
  * @author Demilichzz 显示类，使用lwjgl提供的api实现绘制游戏场景 2013-6-8
  */
 package vEngine.display;
 
-import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
-import static org.lwjgl.glfw.GLFW.glfwDefaultWindowHints;
-import static org.lwjgl.glfw.GLFW.glfwGetPrimaryMonitor;
-import static org.lwjgl.glfw.GLFW.glfwGetVideoMode;
-import static org.lwjgl.glfw.GLFW.glfwGetWindowSize;
-import static org.lwjgl.glfw.GLFW.glfwInit;
-import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
-import static org.lwjgl.glfw.GLFW.glfwPollEvents;
-import static org.lwjgl.glfw.GLFW.glfwSetWindowPos;
-import static org.lwjgl.glfw.GLFW.glfwShowWindow;
-import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
-import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
-import static org.lwjgl.glfw.GLFW.glfwWindowHint;
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_STENCIL_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glClearColor;
-import static org.lwjgl.system.MemoryStack.stackPush;
-import static org.lwjgl.system.MemoryUtil.NULL;
+import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.system.MemoryStack.*;
+import static org.lwjgl.system.MemoryUtil.*;
 import java.nio.IntBuffer;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryStack;
+
+import vEngine.global.Fontconst;
 import lombok.Data;
 import vEngine.global.Debug;
 import vEngine.global.Global;
+import vEngine.system.GameState;
 import vEngine.system.VEngine;
 
 /**
@@ -116,6 +103,9 @@ public class VDisplay {
 
             // Make the OpenGL context current
             glfwMakeContextCurrent(window);
+            
+            
+            
             // Enable v-sync
             glfwSwapInterval(1);
             glfwSetWindowPos(window, 150, 50);
@@ -124,29 +114,23 @@ public class VDisplay {
             e.printStackTrace();
             System.exit(0);
         }
-        // GL11.glEnable(GL11.GL_CULL_FACE);
-        // GL11.glEnable(GL11.GL_TEXTURE_2D);
-        // GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
-        // GL11.glDisable(GL11.GL_LIGHTING);
-        // GL11.glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_NICEST);
-        /*
-         * GL11.glEnable(GL11.GL_BLEND); //启用混合 GL11.glBlendFunc(GL11.GL_SRC_ALPHA,
-         * GL11.GL_ONE_MINUS_SRC_ALPHA); GL11.glEnable(GL11.GL_TEXTURE_2D);
-         * GL11.glShadeModel(GL11.GL_SMOOTH); GL11.glDisable(GL11.GL_DEPTH_TEST); //关闭深度测试
-         * GL11.glDisable(GL11.GL_STENCIL_TEST); //关闭模板测试 //GL11.glDisable(GL11.GL_LIGHTING);
-         * //GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); //GL11.glClearDepth(1);
-         * //lightcontroller.initLighting(); GL11.glViewport(0,0,Global.windowX, Global.windowY);
-         * //设置视口 GL11.glMatrixMode(GL11.GL_MODELVIEW); GL11.glMatrixMode(GL11.GL_PROJECTION);
-         * GL11.glLoadIdentity(); GL11.glOrtho(0, Global.windowX, Global.windowY, 0, 1, -1);
-         * GL11.glMatrixMode(GL11.GL_MODELVIEW); GL11.glClearStencil(0);
-         */
-        // GLU.gluPerspective(45.0f,(float)800/(float)600,0.1f,100.0f);
-        /*
-         * GL11.glShadeModel(GL11.GL_SMOOTH); GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-         * GL11.glClearDepth(1.0f); GL11.glEnable(GL11.GL_DEPTH_TEST); // 启用深度测试
-         * GL11.glDepthFunc(GL11.GL_LEQUAL); // 所作深度测试的类型
-         * GL11.glHint(GL11.GL_PERSPECTIVE_CORRECTION_HINT, GL11.GL_FASTEST);
-         */
+        
+        renderPrepare();
+
+		glEnable(GL_BLEND);							//启用混合
+    	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_TEXTURE_2D);      
+		glShadeModel(GL_SMOOTH);        
+		glDisable(GL_DEPTH_TEST);		//关闭深度测试
+		glDisable(GL_STENCIL_TEST);  	//关闭模板测试
+
+		glViewport(0,0,Global.windowX, Global.windowY);				//设置视口
+		glMatrixMode(GL_MODELVIEW);
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glOrtho(0, Global.windowX, Global.windowY, 0, 1, -1);
+		glMatrixMode(GL_MODELVIEW);
+		glClearStencil(0);
 
     }
 
@@ -158,7 +142,7 @@ public class VDisplay {
      * @throws   
      */
     public boolean checkWindow() {
-        Debug.DebugSimpleMessage("" + GLFW.glfwWindowShouldClose(window));
+        // Debug.DebugSimpleMessage("" + GLFW.glfwWindowShouldClose(window));
         return GLFW.glfwWindowShouldClose(window);
     }
 
@@ -181,15 +165,19 @@ public class VDisplay {
         // GL11.glEnable(GL11.GL_TEXTURE_2D);
         // Display.update();
         GL.createCapabilities();
-
+    	glEnable(GL_TEXTURE_2D);
         // Set the clear color
-        glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
         // Run the rendering loop until the user has attempted to close
         // the window or has pressed the ESCAPE key.
         // while ( !glfwWindowShouldClose(window) ) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT); // clear the
                                                                                     // framebuffer
+        
+        Fontconst.loadGlyphs();
+		//UnicodeFont font = Fontconst.getFont("font_default");
+		//font.drawString(1280, 800, "test",Color.black);
 
         glfwSwapBuffers(window); // swap the color buffers
 
@@ -201,18 +189,19 @@ public class VDisplay {
 
     public void render() {
         // TODO 在每帧游戏窗体更新时渲染当前游戏场景
-        Debug.DebugSimpleMessage("VDisplay.Render");
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // |GL_STENCIL_BUFFER_BIT); // clear the
+        // Debug.DebugSimpleMessage("VDisplay.Render");
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT); // clear the
                                                             // framebuffer
-
+        glClearColor(0.0f,0.0f,0.0f,0.0f);
+        Fontconst.loadGlyphs();
+        GameState gs = GameState.getInstance();
+        gs.drawScene();
+        lightcontroller.processLighting();
+        
         glfwSwapBuffers(window); // swap the color buffers
-
         // Poll for window events. The key callback above will only be
         // invoked during this call.
         glfwPollEvents();
-        // GL11.glClearColor(0.0f,0.0f,0.0f,0.0f);
         // Fontconst.loadGlyphs();
-        // VEngine.newgame.gs.drawScene();
-        lightcontroller.processLighting();
     }
 }

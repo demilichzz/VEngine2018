@@ -1,9 +1,12 @@
-﻿/**
+/**
  * @author Demilichzz
  *
  *         2013-6-8
  */
 package vEngine.global;
+
+import vEngine.system.GameState;
+import vEngine.ui.VUI;
 
 /**
  * @author Demilichzz
@@ -28,5 +31,14 @@ public class Global {
         // TODO Auto-generated method stub
         unitid++;
         return unitid;
+    }
+    
+    public static VUI getUIparent()
+    {
+    	return GameState.getInstance().getEntityManager().getUI();
+    }
+    public static VUI getUIByID(String ID)
+    {
+    	return GameState.getInstance().getEntityManager().getUI().getUIByID(ID);
     }
 }

@@ -1,10 +1,9 @@
-﻿/**
+/**
  * @author Demilichzz 摄像机类，用于定义视图中的摄像机位置及角度等参数 2013-6-13
  */
 package vEngine.display;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.glu.GLU;
 
 /**
  * @author Demilichzz

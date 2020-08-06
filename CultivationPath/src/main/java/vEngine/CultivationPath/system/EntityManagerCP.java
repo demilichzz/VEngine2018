@@ -31,11 +31,25 @@ public class EntityManagerCP extends EntityManager{
 		super();	//设定默认uiparent
 	}
 	
+	protected static volatile EntityManager instance = new EntityManagerCP();
+
+    public static EntityManager getInstance() {
+        if (instance == null) {
+            synchronized (EntityManagerCP.class) {
+                if (instance == null) {
+                    instance = new EntityManagerCP();
+                }
+            }
+        }
+        return instance;
+    }
+	
+    @Override
 	public void init()
 	{
 		VXMLData ui_xmlData = null;
 		try {
-			ui_xmlData = XMLIO.loadXML(VPropertiesLoader.getPropertie("xml_path"));
+			ui_xmlData = XMLIO.loadXML(VPropertiesLoader.getGlobalProperty("xml_path"));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -61,5 +75,8 @@ public class EntityManagerCP extends EntityManager{
 	
 	public void draw() {
 		super.draw();
+	}
+	public void update() {
+		super.update();
 	}
 }

@@ -39,6 +39,6 @@ public class Global {
     }
     public static VUI getUIByID(String ID)
     {
-    	return GameState.getInstance().getEntityManager().getUI().getUIByID(ID);
+    	return getUIparent().getUIByID(ID);
     }
 }

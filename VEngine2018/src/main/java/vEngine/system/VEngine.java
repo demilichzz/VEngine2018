@@ -21,7 +21,7 @@ public class VEngine {
 		// Init();
 	}
 
-	private static volatile VEngine instance = new VEngine();
+	protected static volatile VEngine instance = new VEngine();
 
 	public static VEngine getInstance() {
 		if (instance == null) {
@@ -54,7 +54,28 @@ public class VEngine {
 		Imageconst.Init(); // 初始化资源，字体
 		GameState.getInstance().Init();
 		// VDisplay.getInstance().renderPrepare();
+		GameState.getInstance().setEntityManager(this.getEntityManager());
+		this.getEntityManager().init();
+		GameState.getInstance().setGameController(this.getGameController());
 		GameState.getInstance().Render();
-		GameState.getInstance().setGameController(VGameController.getInstance());
+	}
+	
+	
+	/**
+	 * 获取更新实体管理器，在子项目中重载以定义子项目使用的更新实体管理器
+	 * @return
+	 */
+	public EntityManager getEntityManager()
+	{
+		return EntityManager.getInstance();
+	}
+	
+	/**
+	 * 获取游戏控制器，在子项目中重载以定义子项目使用的控制器
+	 * @return
+	 */
+	public VGameController getGameController()
+	{
+		return VGameController.getInstance();
 	}
 }

@@ -23,24 +23,27 @@ import vEngine.system.GameState;
 public class VGameController {
 	protected HashMap<String,VInputListener> listenerList;
 
-	private VGameController() {
+	protected VGameController() {
 		listenerList = new HashMap<String,VInputListener>();
 		VInputListener l = new VMouseListener(true);
 		addListener("Mouse",l);
-		l = new VInputListener(GLFW_KEY_UP);
-		addListener("Key_"+GLFW_KEY_UP, l);
 	}
-	private static volatile VGameController instance = new VGameController();
+	protected static volatile VGameController instance = new VGameController();
 
     public static VGameController getInstance() {
         if (instance == null) {
-            synchronized (GameState.class) {
+            synchronized (VGameController.class) {
                 if (instance == null) {
                     instance = new VGameController();
                 }
             }
         }
         return instance;
+    }
+    
+    public static void init()
+    {
+    	
     }
 	
 	public void addListener(String ID,VInputListener listener)

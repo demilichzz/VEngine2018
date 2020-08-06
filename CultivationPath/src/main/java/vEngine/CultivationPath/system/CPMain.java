@@ -8,7 +8,13 @@
  */
 package vEngine.CultivationPath.system;
 
+import static org.lwjgl.glfw.GLFW.*;
+
+import vEngine.CultivationPath.controller.CPGameController;
 import vEngine.controller.VGameController;
+import vEngine.controller.VInputListener;
+import vEngine.interfaces.VActionInterface;
+import vEngine.system.EntityManager;
 import vEngine.system.GameState;
 import vEngine.system.VEngine;
 
@@ -22,7 +28,7 @@ public class CPMain extends VEngine {
 		// Init();
 	}
 
-	private static volatile VEngine instance = new CPMain();
+	protected static volatile VEngine instance = new CPMain();
 
 	public static VEngine getInstance() {
 		if (instance == null) {
@@ -45,12 +51,31 @@ public class CPMain extends VEngine {
 
 	public void initResource() {
 		super.initResource();
-		EntityManagerCP em = new EntityManagerCP();
-		GameState.getInstance().setEntityManager(em);
-		em.init();
-		
+		// initController();
 		// VDisplay.getInstance().renderPrepare();
 		// GameState.getInstance().Render();
 	}
-
+	public void initController()
+	{
+		VInputListener l = new VInputListener(GLFW_KEY_UP);
+		l.addAction(new VActionInterface() {
+			@Override
+			public void action(String args) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+	
+	@Override
+	public EntityManager getEntityManager()
+	{
+		return EntityManagerCP.getInstance();
+	}
+	
+	@Override
+	public VGameController getGameController()
+	{
+		return CPGameController.getInstance();
+	}
 }

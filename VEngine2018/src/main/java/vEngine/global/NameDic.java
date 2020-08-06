@@ -21,7 +21,7 @@ public class NameDic {
 	
 	public static void init()
 	{
-		namedic = JsonIO.loadJson(VPropertiesLoader.getPropertie("namedic_json_path"));
+		namedic = JsonIO.loadJson(VPropertiesLoader.getGlobalProperty("namedic_json_path"));
 	}
 	
 	public static String getNamedicValue(String key)

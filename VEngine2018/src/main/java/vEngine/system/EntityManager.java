@@ -10,6 +10,7 @@ package vEngine.system;
 
 import java.util.ArrayList;
 
+import vEngine.controller.VGameController;
 import vEngine.entities.VEntity;
 import vEngine.global.Global;
 import vEngine.ui.VUI;
@@ -30,6 +31,19 @@ public class EntityManager {
 		VUI uiparent = new VUI(Global.windowX, Global.windowY, "uiparent");
 		setUI(uiparent);
 	}
+	
+	protected static volatile EntityManager instance = new EntityManager();
+
+    public static EntityManager getInstance() {
+        if (instance == null) {
+            synchronized (EntityManager.class) {
+                if (instance == null) {
+                    instance = new EntityManager();
+                }
+            }
+        }
+        return instance;
+    }
 	
 	public void draw()
 	{
@@ -82,5 +96,14 @@ public class EntityManager {
 	public VUI getUI()
 	{
 		return uiparent;
+	}
+
+	/**
+	 * 初始化管理实体管理器，需要将实体管理器设定至GameState后才能进行初始化UI，因此不能在构造函数内直接调用
+	 * 在子项目中重载以初始化实体管理器
+	 */
+	public void init() {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -33,7 +33,8 @@ public class VInputListener {
 
 	public VInputListener(int key) {
 		this();
-		addBindKey(key);
+		addBindKey(key);	//默认绑定按键
+		VGameController.getInstance().addListener("Key_"+key, this);	//自动将初始化的按键监听器加入到监听器列表
 	}
 
 	public void addBindKey(int key) {

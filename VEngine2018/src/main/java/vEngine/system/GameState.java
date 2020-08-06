@@ -93,7 +93,7 @@ public class GameState {
         //gs_tp = new VTimerProcessor();
         //GameData.preinitGameData();
         InitFSM();
-        InitGSUpdateProcessor();
+        //InitGSUpdateProcessor();
         
         //InitLuaScript();
         //InitUI();
@@ -292,7 +292,10 @@ public class GameState {
     }
 
     public void drawScene() {
-    	entityManager.draw();
+    	if(entityManager!=null)
+    	{
+    		entityManager.draw();
+    	}
         //uiparent.drawUI();
     }
 

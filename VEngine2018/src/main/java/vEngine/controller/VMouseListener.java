@@ -81,8 +81,8 @@ public class VMouseListener extends VInputListener {
 		}
 
 		if (mouseState[GLFW_MOUSE_BUTTON_LEFT] == MOUSE_PRESS || mouseState[GLFW_MOUSE_BUTTON_LEFT] == MOUSE_RELEASE) {
-			// System.out.println("Mouse:" + mouseState[GLFW_MOUSE_BUTTON_LEFT] + "X:" +
-			// x.get(0) + " Y:" + y.get(0));
+			//System.out.println("Mouse:" + mouseState[GLFW_MOUSE_BUTTON_LEFT] + "X:" +
+			 //x.get(0) + " Y:" + y.get(0));
 		} else {
 
 		}
@@ -159,19 +159,14 @@ public class VMouseListener extends VInputListener {
 	}
 	public void mouseActionLeftRelease()
 	{
-		VUI currentui = Global.getUIparent().getUIbyLoc(getX(), getY()); // 获取鼠标按下位置的最上层UI
 		if (activeui != null && activeui instanceof VMouseActionUI) {
 			if(((VMouseActionUI) activeui).getAllowdrag())
 			{
 				((VMouseActionUI) activeui).uiDragRelease(getX(), getY());
 			}
-			else
-			{
-				activeui.action("Mouse_Release");
-			}
 		} 
-		else if (currentui == activeui) {
-			currentui.action("Mouse_Release");
+		if (holdui!=null&&holdui == activeui) {
+			holdui.action("Mouse_Release");
 		}
 		activeui = null;
 	}

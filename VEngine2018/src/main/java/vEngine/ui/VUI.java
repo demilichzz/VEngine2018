@@ -38,7 +38,7 @@ public class VUI extends VEntity implements VActionInterface {
 	protected Color uicolor = new Color(255,255,255,255);
 	// protected String imagestr; // UI图像在Imageconst中对应字符串,即图像文件名
 	// 现已不需要此变量,直接调用image.toString();
-	protected double x, y; // UI左上角坐标基于父UI坐标的偏移
+	protected double x, y; // UI左上角坐标基于父UI坐标及锚点位置的偏移
 	//protected VUIText text;
 	protected double scale=1.0;	//UI的图形缩放比例，UI区域会随着缩放比例的变化改变
 	protected HashMap<Integer,VText> textlist=new HashMap<Integer,VText>();	//UI包含的文本列表
@@ -54,6 +54,17 @@ public class VUI extends VEntity implements VActionInterface {
 	public VUI firstChild; // 最底层子UI,即子UI链表始端
 	public VUI nextUI; // 上层UI,即同层UI链表下一个
 	public VUI previousUI; // 下层UI,即同层UI链表上一个
+	// ------------UI相对位置布局-------------
+	protected int layout_type = UI_ANCHOR_TOPLEFT;	//UI相对位置类型
+	public static final int UI_ANCHOR_TOPLEFT = 0;			//锚点位于左上角
+	public static final int UI_ANCHOR_TOP = 1;				//锚点位于上方中心
+	public static final int UI_ANCHOR_TOPRIGHT = 2;			//锚点位于右上角
+	public static final int UI_ANCHOR_CENTERLEFT = 3;		//锚点位于中心左侧
+	public static final int UI_ANCHOR_CENTER = 4;			//锚点位于中心
+	public static final int UI_ANCHOR_CENTERRIGHT = 5;		//锚点位于中心右侧
+	public static final int UI_ANCHOR_BOTTOMLEFT = 6;		//锚点位于左下角
+	public static final int UI_ANCHOR_BOTTOM = 7;			//锚点位于下方中心
+	public static final int UI_ANCHOR_BOTTOMRIGHT = 8;		//锚点位于右下角
 
 	public VUI() {
 
@@ -62,25 +73,18 @@ public class VUI extends VEntity implements VActionInterface {
 	public VUI(int width, int height, String ID) {
 		// TODO 通过宽高定义制定大小的图像资源为空的UI
 		image = null;
-		x = 0;
-		y = 0;
+		area = new VArea(0, 0, width, height);
+		area.boldborder = false;
+		setLoc(0,0);
 		scale = 1.0;
 		visible = true;
 		enable = true;
 		uiID = ID;
-		area = new VArea(0, 0, width, height);
-		area.boldborder = false;
 	}
 
 	public VUI(String str, String ID) {
 		// TODO 通过图像文件名建立UI的构造函数
 		image = Imageconst.GetImageByName(str);
-		x = 0;
-		y = 0;
-		scale = 1.0;
-		visible = true;
-		enable = true;
-		uiID = ID;
 		if(image!=null){
 			area = new VArea(0, 0, image.getWidth(), image.getHeight());
 			area.boldborder = false;
@@ -89,6 +93,11 @@ public class VUI extends VEntity implements VActionInterface {
 			area = new VArea(0, 0,16,16);
 			area.boldborder = false;
 		}
+		setLoc(0,0);
+		scale = 1.0;
+		visible = true;
+		enable = true;
+		uiID = ID;
 	}
 
 	/**
@@ -118,6 +127,18 @@ public class VUI extends VEntity implements VActionInterface {
 	 */
 	public void setTextureIndex(int textureIndex) {
 		this.textureIndex = textureIndex;
+	}
+
+	public int getLayout() {
+		return layout_type;
+	}
+	/**
+	 * 重设UI相对锚点位置类型
+	 * @param layout the layout to set
+	 */
+	public void setLayout(int layout) {
+		this.layout_type = layout;
+		setLoc(x,y);
 	}
 	
 	public boolean getVisible() {
@@ -380,7 +401,7 @@ public class VUI extends VEntity implements VActionInterface {
 	public double getRealX(){
 		// TODO 获取实际x坐标,即屏幕定位坐标
 		if(parent!=null){
-			return parent.getRealX()+x;
+			return parent.getRealX()+ (layout_type%3)*parent.getWidth()*0.5 - (layout_type%3)*getWidth()*0.5 +x;
 		}
 		else{
 			return x;
@@ -388,7 +409,7 @@ public class VUI extends VEntity implements VActionInterface {
 	}
 	public double getRealY(){
 		if(parent!=null){
-			return parent.getRealY()+y;
+			return parent.getRealY()+ (layout_type/3)*parent.getHeight()*0.5 - (layout_type/3)*getHeight()*0.5 + y;
 		}
 		else{
 			return y;

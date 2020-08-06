@@ -11,6 +11,7 @@ package vEngine.CultivationPath.system;
 import vEngine.display.VText;
 import vEngine.global.Global;
 import vEngine.global.VPropertiesLoader;
+import vEngine.interfaces.VActionInterface;
 import vEngine.interfaces.VXMLDataAdapter;
 import vEngine.io.VXMLData;
 import vEngine.io.XMLIO;
@@ -45,6 +46,17 @@ public class EntityManagerCP extends EntityManager{
 			ui_factory.setParams(new VXMLDataAdapter(ui));
 			ui_factory.creator("VMouseActionUI");
 		}
+		VUI ui = Global.getUIByID("ui_test");
+		ui.addAction(new VActionInterface() {
+			@Override
+			public void action(String args) {
+				// TODO Auto-generated method stub
+				if(args.equals("Mouse_Release"))
+				{
+					System.out.println(ui.toString());
+				}	
+			}
+		});
 	}
 	
 	public void draw() {

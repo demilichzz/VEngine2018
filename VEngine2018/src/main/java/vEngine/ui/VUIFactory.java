@@ -31,6 +31,7 @@ public class VUIFactory implements VUIAbstractFactory{
 	protected boolean autoupdate=true;		//是否自动应用updateUI函数更新
 	protected String parent; //父UI
 	protected String text; //UI文本
+	protected int layout_type;	//UI相对位置类型
 	
 	public VUIFactory()
 	{
@@ -49,6 +50,7 @@ public class VUIFactory implements VUIAbstractFactory{
 		f.enable=this.enable;
 		f.parent=this.parent;
 		f.text=this.text;
+		f.layout_type=this.layout_type;
 		return f;
 	}
 	
@@ -66,6 +68,7 @@ public class VUIFactory implements VUIAbstractFactory{
 		enable = true;
 		parent = "uiparent";
 		text = null;
+		layout_type = VUI.UI_ANCHOR_TOPLEFT;
 	}
 	
 	public void setParams(VUIDataInterface data)
@@ -110,6 +113,10 @@ public class VUIFactory implements VUIAbstractFactory{
 			{
 				text=data.getUIAttrib("text");
 			}
+			if(data.getUIAttrib("layout_type")!=null)
+			{
+				layout_type=Integer.parseInt(data.getUIAttrib("layout_type"));
+			}
 		}	
 	}
 
@@ -136,6 +143,7 @@ public class VUIFactory implements VUIAbstractFactory{
 		{
 			ui.addText(NameDic.getNamedicValue(text));
 		}
+		ui.setLayout(layout_type);
 		return ui;
 	}
 

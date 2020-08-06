@@ -22,21 +22,28 @@ import vEngine.display.VTexture;
  */
 public class Fontconst {
 	public static HashMap<String, UnicodeFont> font_hashmap = new HashMap<String, UnicodeFont>();  //按索引存储字体类
+	public static final String FONT_DEFAULT = "font_default";
+	public static final String FONT_SMALL = "font_small";
+	public static final String FONT_BIG = "font_big";
+	public static final String FONT_HINT = "font_hint";
+	public static final String FONT_DM1 = "font_dm1";
+	public static final String FONT_DM2 = "font_dm2";
+	
 	public static void Init(){
 		Debug.DebugTestTimeStart();
 		//Debug.DebugSimpleMessage("初始化字体");
 		UnicodeFont f = createFont("微软雅黑", Font.BOLD, 16);
-		font_hashmap.put("font_default", f);
+		font_hashmap.put(FONT_DEFAULT, f);
 		f = createFont("微软雅黑", Font.PLAIN, 12);
-		font_hashmap.put("font_small", f);
+		font_hashmap.put(FONT_SMALL, f);
 		f = createFont("微软雅黑", Font.BOLD, 32);
-		font_hashmap.put("font_big", f);
+		font_hashmap.put(FONT_BIG, f);
 		f = createFont("微软雅黑", Font.PLAIN, 32);
-		font_hashmap.put("font_hint", f);
+		font_hashmap.put(FONT_HINT, f);
 		f = createFont("微软雅黑", Font.BOLD, 20);
-		font_hashmap.put("font_dm1", f);
+		font_hashmap.put(FONT_DM1, f);
 		f = createFont("微软雅黑", Font.BOLD, 16);
-		font_hashmap.put("font_dm2", f);
+		font_hashmap.put(FONT_DM2, f);
 		Debug.DebugTestTimeEnd("初始化字体", true);
 	}
 	public static UnicodeFont createFont(String fontname,int style,int size){
@@ -60,7 +67,7 @@ public class Fontconst {
 		// TODO 根据名称索引获取字体
 		UnicodeFont f = font_hashmap.get(index);
 		if(f==null){
-			f=font_hashmap.get("font_default");
+			f=font_hashmap.get(FONT_DEFAULT);
 		}
 		return f;
 	}

@@ -26,20 +26,24 @@ public class VText implements VRenderableInterface{
 	protected TrueTypeFont tfont;
 	protected VUI parentui;			//字体位于的UI
 	protected double xoffset,yoffset;	//定位锚点坐标相对于UI原点的偏移值
-	protected double transparency = 0.0;	//透明度
+	protected double transparency = 1.0;	//透明度
 	protected Color color=new Color(0,0,0);
-	protected boolean stroke = true;
-	protected int layout = 0;		//文字布局类型
+	protected boolean stroke = false;
 	protected int maxwidth = -1;	//文字横行距离上限,-1表示文字不分行
 	protected String[] textlist;	//文本间隔点索引
 	protected int textrow = 1;			//文本行数
-	public static final int Layout_REGULAR = 0;		//常规布局，锚点位于文本左上角
+	protected int layout = Layout_CENTER;		//文字布局类型
+	public static final int Layout_TOPLEFT = 0;		//常规布局，锚点位于文本左上角
 	public static final int Layout_CENTER = 1;		//中心布局，锚点位于文本中心
 	public static final int Layout_RIGHT = 2;		//右侧布局，锚点位于文本右侧中心
+	protected int ui_bind_type = UI_BIND_CENTER;	//UI绑定类型
+	public static final int UI_BIND_TOPLEFT = 0;	//UI绑定锚点为左上角
+	public static final int UI_BIND_CENTER = 1;	//UI绑定锚点为中心
+	public static final int UI_BIND_RIGHT = 2;	//UI绑定锚点为右侧中心
 	protected int expiretime = -1;
 	
 	public VText(String text){
-		this.setText(text,0,0,Color.white,"font_default",true);
+		this.setText(text,0,0,Color.white,Fontconst.FONT_DEFAULT,false);
 	}
 	public VText(String text,double xoff,double yoff,Color col,String font,boolean stroke){
 		this.setText(text,xoff,yoff,col,font,stroke);
@@ -91,6 +95,10 @@ public class VText implements VRenderableInterface{
 		// TODO 设置布局类型
 		this.layout=layout;
 	}
+	public void setUiBindType(int bind)
+	{
+		this.ui_bind_type = bind;
+	}
 	public void setRestrict(int maxwidth){
 		// TODO 设置横行文字允许的最大像素值
 		this.maxwidth = maxwidth;
@@ -135,8 +143,27 @@ public class VText implements VRenderableInterface{
 			double uix = 0;
 			double uiy = 0;
 			if (parentui != null) {
-				uix = parentui.getRealX();
-				uiy = parentui.getRealY();
+				switch(ui_bind_type)
+				{
+				case UI_BIND_TOPLEFT:
+				{
+					uix = parentui.getRealX();
+					uiy = parentui.getRealY();
+					break;
+				}
+				case UI_BIND_CENTER:
+				{
+					uix = parentui.getRealX() + parentui.getWidth()/2;
+					uiy = parentui.getRealY() + parentui.getHeight()/2;
+					break;
+				}
+				case UI_BIND_RIGHT:
+				{
+					uix = parentui.getRealX() + parentui.getWidth();
+					uiy = parentui.getRealY() + parentui.getHeight()/2;
+					break;
+				}
+				}
 			}
 			if (stroke) { // 描边
 				for (int i = -1; i < 2; i++) {
@@ -146,7 +173,7 @@ public class VText implements VRenderableInterface{
 							float starty = 0;
 							if (maxwidth > 0) {
 								switch (layout) {
-								case Layout_REGULAR: {
+								case Layout_TOPLEFT: {
 									startx = (float) (uix + xoffset + i);
 									starty = (float) (uiy + yoffset + j);
 									break;
@@ -180,7 +207,7 @@ public class VText implements VRenderableInterface{
 								}
 							} else {
 								switch (layout) {
-								case Layout_REGULAR: {
+								case Layout_TOPLEFT: {
 									startx = (float) (uix + xoffset + i);
 									starty = (float) (uiy + yoffset + j);
 									break;
@@ -212,7 +239,7 @@ public class VText implements VRenderableInterface{
 			float starty = 0;
 			if (maxwidth > 0) { // 绘制文字部分
 				switch (layout) {
-				case Layout_REGULAR: {
+				case Layout_TOPLEFT: {
 					startx = (float) (uix + xoffset);
 					starty = (float) (uiy + yoffset);
 					break;
@@ -242,7 +269,7 @@ public class VText implements VRenderableInterface{
 				}
 			} else {
 				switch (layout) {
-				case Layout_REGULAR: {
+				case Layout_TOPLEFT: {
 					startx = (float) (uix + xoffset);
 					starty = (float) (uiy + yoffset);
 					break;

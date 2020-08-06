@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<ui id="ui_test">
-		<imagestr>button_100x50.png</imagestr>
+		<imagestr>button_100x50_2.png</imagestr>
 		<locX>100</locX>
 		<locY>100</locY>
 		<parentID>uiparent</parentID>
@@ -9,16 +9,7 @@
 		<scale>1</scale>
 		<visible>true</visible>
 		<enable>true</enable>
-		<textlist>
-			<text>
-				<textString>test1</textString>
-				<textId>2</textId>
-			</text>
-			<text>
-				<textString>test2</textString>
-				<textId>2</textId>
-			</text>
-		</textlist>
+		<text>ui_button_01</text>
 	</ui>
 	<ui id="ui_test2">
 		<imagestr>button_100x50.png</imagestr>
@@ -39,5 +30,6 @@
 		<scale>1</scale>
 		<visible>true</visible>
 		<enable>true</enable>
+		<text>ui_button_02</text>
 	</ui>
 </root>

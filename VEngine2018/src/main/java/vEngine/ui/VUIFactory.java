@@ -10,6 +10,7 @@ package vEngine.ui;
 
 import lombok.Data;
 import vEngine.global.Global;
+import vEngine.global.NameDic;
 import vEngine.interfaces.VUIDataInterface;
 
 /**
@@ -29,6 +30,7 @@ public class VUIFactory implements VUIAbstractFactory{
 	protected String uiID; // 在UIManager中的索引
 	protected boolean autoupdate=true;		//是否自动应用updateUI函数更新
 	protected String parent; //父UI
+	protected String text; //UI文本
 	
 	public VUIFactory()
 	{
@@ -46,6 +48,7 @@ public class VUIFactory implements VUIAbstractFactory{
 		f.visible=this.visible;
 		f.enable=this.enable;
 		f.parent=this.parent;
+		f.text=this.text;
 		return f;
 	}
 	
@@ -62,6 +65,7 @@ public class VUIFactory implements VUIAbstractFactory{
 		visible = true;
 		enable = true;
 		parent = "uiparent";
+		text = null;
 	}
 	
 	public void setParams(VUIDataInterface data)
@@ -102,6 +106,10 @@ public class VUIFactory implements VUIAbstractFactory{
 			{
 				parent=data.getUIAttrib("parent");
 			}
+			if(data.getUIAttrib("text")!=null)
+			{
+				text=data.getUIAttrib("text");
+			}
 		}	
 	}
 
@@ -109,13 +117,25 @@ public class VUIFactory implements VUIAbstractFactory{
 	@Override
 	public VUI creator(String type) {
 		// TODO Auto-generated method stub
-		VUI ui = new VUI(imagestr,uiID);
+		VUI ui;
+		if(type.equals("VMouseActionUI"))
+		{
+			ui = new VMouseActionUI(imagestr,uiID);
+		}
+		else
+		{
+			ui = new VUI(imagestr,uiID);
+		}
 		ui.setLoc(x, y);
 		ui.setTransparency(transparency);
 		ui.setScale(scale);
 		ui.setVisible(visible);
 		ui.setEnable(enable);
 		ui.setParentByID(parent);
+		if(text!=null&&!text.equals(""))
+		{
+			ui.addText(NameDic.getNamedicValue(text));
+		}
 		return ui;
 	}
 

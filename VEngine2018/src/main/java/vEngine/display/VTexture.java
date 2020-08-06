@@ -31,7 +31,7 @@ public class VTexture implements VRenderableInterface{
 	protected Texture texture=null;
 	protected int xcrop=1;
 	protected int ycrop=1;
-	protected int index=0;
+	protected int index=-1;
 	
 	public VTexture(String path,String name){
 		try {
@@ -51,6 +51,23 @@ public class VTexture implements VRenderableInterface{
 	public void setCrop(int x,int y){
 		xcrop = x;
 		ycrop = y;
+		setIndex(x*y-1);
+	}
+	/**
+	 * 获取纹理是否已设定分割
+	 * @return
+	 */
+	public boolean getCrop()
+	{
+		return xcrop!=1||ycrop!=1;
+	}
+	public int getCropX()
+	{
+		return xcrop;
+	}
+	public int getCropY()
+	{
+		return ycrop;
 	}
 	public void setIndex(int i){
 		index = i;

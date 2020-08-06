@@ -43,7 +43,7 @@ public class EntityManagerCP extends EntityManager{
 		for(VXMLData ui:ui_xmlData.getChildlist())
 		{
 			ui_factory.setParams(new VXMLDataAdapter(ui));
-			ui_factory.creator("VUI");
+			ui_factory.creator("VMouseActionUI");
 		}
 	}
 	

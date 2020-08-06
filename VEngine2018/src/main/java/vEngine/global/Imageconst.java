@@ -37,6 +37,7 @@ public class Imageconst {
 			i++;
 		}
 		nullpic = txr_hashmap.get("nullpic.png");
+		txr_hashmap.get("button_100x50_2.png").setCrop(1, 2);
 		Debug.DebugTestTimeEnd("初始化图像资源", true);
 	}
 

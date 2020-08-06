@@ -5,6 +5,10 @@
  */
 package vEngine.ui;
 
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.glBlendFunc;
+
 import vEngine.controller.VGameController;
 import vEngine.interfaces.VActionInterface;
 import vEngine.controller.VMouseListener;
@@ -41,6 +45,23 @@ public class VMouseActionUI extends VUI{
 	public void action(String args) {
 		// TODO 参数为调用者类别字符串
 		if (enable) {
+			if(getImage()!=null&&getImage().getCrop())	//如果UI图像纹理设定了分割，设定默认表示模式
+			{
+				if (args.equals("Mouse_Press"))
+				{
+					setTextureIndex(1);
+				}
+				else if(args.equals("Mouse_Release")||args.equals("Mouse_HoldRelease"))
+				{
+					setColor(255,255,255,255);
+					setTextureIndex(0);
+				}
+				else if(args.equals("Mouse_Hold"))
+				{
+					setColor(200,255,200,255);
+				}
+			}
+			
 			if (action != null) {
 				action.action(args);
 			}

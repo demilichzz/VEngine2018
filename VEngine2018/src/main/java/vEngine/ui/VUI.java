@@ -32,7 +32,8 @@ public class VUI extends VEntity implements VActionInterface {
 	public static final int MENU_RESPONSE_UD = 1;	//菜单响应模式为上下键
 	public static final int MENU_RESPONSE_LRUD = 2;	//菜单响应模式为上下左右键
 	// -----------常规参数-------------------------------
-	public VTexture image; // UI图像
+	protected VTexture image; // UI图像
+	protected int textureIndex=0;	//UI图像的索引分割index
 	protected double transparency = 1.0;	//透明度
 	protected Color uicolor = new Color(255,255,255,255);
 	// protected String imagestr; // UI图像在Imageconst中对应字符串,即图像文件名
@@ -90,12 +91,33 @@ public class VUI extends VEntity implements VActionInterface {
 		}
 	}
 
+	/**
+	 * @return the image
+	 */
+	public VTexture getImage() {
+		return image;
+	}
+	
 	public void setAreaSize(int width,int height){
 		if(image==null){
 			area = new VArea(0, 0, width, height);
 			area.boldborder = false;
 			area.setLoc(getRealX(), getRealY());
 		}
+	}
+	
+	/**
+	 * @return the textureIndex
+	 */
+	public int getTextureIndex() {
+		return textureIndex;
+	}
+
+	/**
+	 * @param textureIndex the textureIndex to set
+	 */
+	public void setTextureIndex(int textureIndex) {
+		this.textureIndex = textureIndex;
 	}
 	
 	public boolean getVisible() {
@@ -397,7 +419,14 @@ public class VUI extends VEntity implements VActionInterface {
 	}
 	protected void drawUIImage(){
 		if (image != null) {	//绘制UI图像
-			image.directDrawTexture(getRealX(), getRealY(), -1,scale,uicolor);
+			if(image.getCrop())	//如果纹理设定了分割
+			{
+				image.directDrawTexture(getRealX(), getRealY(), textureIndex,scale,uicolor); //绘制UI指定的纹理索引图像，默认为0
+			}
+			else
+			{
+				image.directDrawTexture(getRealX(), getRealY(), -1,scale,uicolor);
+			}
 		}
 		else{
 			//Imageconst.nullpic.directDrawTexture(getRealX(), getRealY(), -1,scale);
@@ -440,7 +469,6 @@ public class VUI extends VEntity implements VActionInterface {
 		addText(text,size);
 	}
 	public void addText(VText text,int index){
-		int size = textlist.size();
 		textlist.put(index, text);
 		text.setParentUI(this);
 	}

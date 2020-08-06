@@ -37,6 +37,7 @@ public class VMouseListener extends VInputListener {
 	protected boolean mouseListener = false;
 	protected int[] mouseState;
 
+	protected VUI holdui;	// 当前鼠标停留的UI
 	protected VUI activeui; // 当前激活的ui，包括拖拽状态等响应
 
 	public VMouseListener(boolean b) {
@@ -69,6 +70,15 @@ public class VMouseListener extends VInputListener {
 				// 通过mouseState的前次值和当前值计算鼠标按键状态
 			}
 		}
+		VUI currentui = Global.getUIparent().getUIbyLoc(getX(), getY());
+		if(holdui==null||holdui!=currentui)
+		{
+			if(holdui!=null)
+			{
+				holdui.action("Mouse_HoldRelease");
+			}
+			holdui=currentui;
+		}
 
 		if (mouseState[GLFW_MOUSE_BUTTON_LEFT] == MOUSE_PRESS || mouseState[GLFW_MOUSE_BUTTON_LEFT] == MOUSE_RELEASE) {
 			// System.out.println("Mouse:" + mouseState[GLFW_MOUSE_BUTTON_LEFT] + "X:" +
@@ -76,7 +86,7 @@ public class VMouseListener extends VInputListener {
 		} else {
 
 		}
-
+		mouseActionHold();
 		switch(mouseState[GLFW_MOUSE_BUTTON_LEFT])
 		{
 		case MOUSE_PRESS:
@@ -98,6 +108,23 @@ public class VMouseListener extends VInputListener {
 	}
 
 	/**
+	 * 获取鼠标停留UI并激活其停留事件
+	 * @param x
+	 * @param y
+	 */
+	private void mouseActionHold() {
+		// TODO Auto-generated method stub
+		if(holdui != null)
+		{
+			holdui.action("Mouse_Hold");
+		}
+		if(activeui != holdui)
+		{
+			
+		}
+	}
+
+	/**
 	 * @param vMouseActionUI
 	 */
 	public void setActiveUI(VUI ui) {
@@ -106,15 +133,21 @@ public class VMouseListener extends VInputListener {
 	}
 	public void mouseActionLeftPress()
 	{
-		VUI currentui = Global.getUIparent().getUIbyLoc(getX(), getY()); // 获取鼠标按下位置的最上层UI
-		if (currentui != null) {
+		if (holdui != null) {
 			if (activeui == null) {
-				setActiveUI(currentui);
+				setActiveUI(holdui);
 			}
 			if (activeui instanceof VMouseActionUI) {
-				((VMouseActionUI) activeui).uiDragPress(getX(), getY()); // 激活UI的拖拽状态,同时将控制器中的当前拖拽ui设为此ui
+				if(((VMouseActionUI) activeui).getAllowdrag())
+				{
+					((VMouseActionUI) activeui).uiDragPress(getX(), getY()); // 激活UI的拖拽状态,同时将控制器中的当前拖拽ui设为此ui
+				}
+				else
+				{
+					holdui.action("Mouse_Press");
+				}
 			} else {
-				currentui.action("Mouse_Press");
+				//currentui.action("Mouse_Press");
 			}
 		}
 	}
@@ -128,7 +161,14 @@ public class VMouseListener extends VInputListener {
 	{
 		VUI currentui = Global.getUIparent().getUIbyLoc(getX(), getY()); // 获取鼠标按下位置的最上层UI
 		if (activeui != null && activeui instanceof VMouseActionUI) {
-			((VMouseActionUI) activeui).uiDragRelease(getX(), getY());
+			if(((VMouseActionUI) activeui).getAllowdrag())
+			{
+				((VMouseActionUI) activeui).uiDragRelease(getX(), getY());
+			}
+			else
+			{
+				activeui.action("Mouse_Release");
+			}
 		} 
 		else if (currentui == activeui) {
 			currentui.action("Mouse_Release");

@@ -4,6 +4,7 @@ import vEngine.controller.VGameController;
 import vEngine.display.VDisplay;
 import vEngine.global.Fontconst;
 import vEngine.global.Imageconst;
+import vEngine.global.NameDic;
 import vEngine.global.VPropertiesLoader;
 import vEngine.system.driver.Simulator;
 
@@ -47,6 +48,7 @@ public class VEngine {
 
 	public void initResource() {
 		VPropertiesLoader.init();
+		NameDic.init();
 		Fontconst.Init();
 		VDisplay.getInstance().initGL(); // 初始化OpenGL参数
 		Imageconst.Init(); // 初始化资源，字体

@@ -61,18 +61,5 @@ public class CPGameController extends VGameController {
 			System.out.println(key + "=" + value);
 			VInputListener vil = new VInputListener(key, value);
 		}
-		// ----------定义键盘监听器action----------
-		VInputListener vil = GameState.getInstance().getGameController().getListener("KEY_UP");
-		vil.addAction(new VActionInterface() {
-			@Override
-			public void action(String args) {
-				// TODO Auto-generated method stub
-				switch (args) {
-				case "KEY_PRESS":
-					System.out.println(vil.getKey());
-					break;
-				}
-			}
-		});
 	}
 }

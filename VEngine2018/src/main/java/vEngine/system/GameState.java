@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import vEngine.controller.VGameController;
+import vEngine.data.VGameData;
 import vEngine.display.VDisplay;
 import vEngine.display.VText;
 import vEngine.fsm.FSMclass;
@@ -44,7 +45,10 @@ public class GameState {
     @Getter
     @Setter
     protected VGameController gameController;	//控制器
-
+    @Getter
+    @Setter
+    protected VGameData gameData; //游戏数据
+    
     // singleton define
     private GameState() {
         setGsRefreshTime(10);

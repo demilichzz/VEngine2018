@@ -1,6 +1,7 @@
 package vEngine.system;
 
 import vEngine.controller.VGameController;
+import vEngine.data.VGameData;
 import vEngine.display.VDisplay;
 import vEngine.global.Fontconst;
 import vEngine.global.Imageconst;
@@ -58,6 +59,8 @@ public class VEngine {
 		this.getEntityManager().init();
 		GameState.getInstance().setGameController(this.getGameController());
 		this.getGameController().init();
+		GameState.getInstance().setGameData(this.getGameData());
+		this.getGameData().init();
 		GameState.getInstance().Render();
 	}
 	
@@ -78,5 +81,14 @@ public class VEngine {
 	public VGameController getGameController()
 	{
 		return VGameController.getInstance();
+	}
+	
+	/**
+	 * 获取游戏数据对象，在子项目中重载以定义子项目使用的游戏数据对象
+	 * @return
+	 */
+	private VGameData getGameData() {
+		// TODO Auto-generated method stub
+		return VGameData.getInstance();
 	}
 }

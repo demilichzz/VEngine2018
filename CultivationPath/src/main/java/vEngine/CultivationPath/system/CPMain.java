@@ -14,6 +14,7 @@ import vEngine.CultivationPath.controller.CPGameController;
 import vEngine.action.VActionInterface;
 import vEngine.controller.VGameController;
 import vEngine.controller.VInputListener;
+import vEngine.global.NameDic;
 import vEngine.system.EntityManager;
 import vEngine.system.GameState;
 import vEngine.system.VEngine;
@@ -49,24 +50,16 @@ public class CPMain extends VEngine {
 		getInstance().gameloop();
 	}
 
+	@Override
 	public void initResource() {
 		super.initResource();
 		// initController();
 		// VDisplay.getInstance().renderPrepare();
 		// GameState.getInstance().Render();
+		NameDic.addParamList(new String[] {"Charname","Classtype"});
+		System.out.println(NameDic.getNamedicValue("dialog_param_test", new String[]{"100","200"}));
 	}
-	public void initController()
-	{
-		VInputListener l = new VInputListener(GLFW_KEY_UP);
-		l.addAction(new VActionInterface() {
-			@Override
-			public void action(String args) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-	}
-	
+
 	@Override
 	public EntityManager getEntityManager()
 	{

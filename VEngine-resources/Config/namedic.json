@@ -3,5 +3,6 @@
 "ui_button_02":"テストUI02",
 "dialog_01":"测试用对话文本，使用换行符进行换行\n这里是第二行文本",
 "ui_button_ok":"确认",
-"ui_button_cancel":"取消"
+"ui_button_cancel":"取消",
+"dialog_param_test":"参数测试用文本，这里使用空参数：#NotFound#，这里使用角色名：#Charname#，参数1：#1#，参数2：#2#"
 }

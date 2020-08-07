@@ -101,10 +101,10 @@ public class EntityManager {
 		switch(commandsts)
 		{
 		case VInputListener.KEY_PRESS:
-			//System.out.println(commandkey+":press");
+			System.out.println(commandkey+":press");
 			break;
 		case VInputListener.KEY_RELEASE:
-			//System.out.println(commandkey+":release");
+			System.out.println(commandkey+":release");
 			break;
 		}
 	}

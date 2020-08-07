@@ -26,7 +26,7 @@ public class Imageconst {
 	public static void Init() {
 		Debug.DebugTestTimeStart();
 		//Debug.DebugSimpleMessage("初始化图像资源");
-		StoreFolder(VPropertiesLoader.getGlobalProperty("image_preload_path"));
+		StoreFolder(VPropertiesLoader.getProperty("Global","image_preload_path"));
 		dynamicload_folder = "res/Pic/Dynamicload";
 		//setCrop("terrain.png",16,16);
 		//------------将ti_hashmap内对象存储为数组,用于在JList中使用--------

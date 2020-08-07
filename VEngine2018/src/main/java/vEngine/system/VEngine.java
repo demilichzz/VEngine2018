@@ -57,6 +57,7 @@ public class VEngine {
 		GameState.getInstance().setEntityManager(this.getEntityManager());
 		this.getEntityManager().init();
 		GameState.getInstance().setGameController(this.getGameController());
+		this.getGameController().init();
 		GameState.getInstance().Render();
 	}
 	

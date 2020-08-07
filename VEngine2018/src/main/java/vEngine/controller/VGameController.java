@@ -40,12 +40,12 @@ public class VGameController {
         }
         return instance;
     }
-    
-    public static void init()
+	
+    public void init()
     {
     	
     }
-	
+    
 	public void addListener(String ID,VInputListener listener)
 	{
 		listenerList.put(ID,listener);

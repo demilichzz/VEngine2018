@@ -11,6 +11,7 @@ package vEngine.system;
 import java.util.ArrayList;
 
 import vEngine.controller.VGameController;
+import vEngine.controller.VInputListener;
 import vEngine.entities.VEntity;
 import vEngine.global.Global;
 import vEngine.ui.VUI;
@@ -89,6 +90,25 @@ public class EntityManager {
 		}
 	}
 	
+	
+	/**
+	 * 响应键盘及手柄输入监听器的命令
+	 * @param commandkey usersetting定义的按键行为关键字
+	 * @param commandsts 按键状态
+	 */
+	public void command(String commandkey,int commandsts)
+	{
+		switch(commandsts)
+		{
+		case VInputListener.KEY_PRESS:
+			//System.out.println(commandkey+":press");
+			break;
+		case VInputListener.KEY_RELEASE:
+			//System.out.println(commandkey+":release");
+			break;
+		}
+	}
+	
 	public void setUI(VUI ui)
 	{
 		uiparent = ui;
@@ -99,7 +119,7 @@ public class EntityManager {
 	}
 
 	/**
-	 * 初始化管理实体管理器，需要将实体管理器设定至GameState后才能进行初始化UI，因此不能在构造函数内直接调用
+	 * 初始化实体管理器，需要将实体管理器设定至GameState后才能进行初始化UI，因此不能在构造函数内直接调用
 	 * 在子项目中重载以初始化实体管理器
 	 */
 	public void init() {

@@ -11,9 +11,9 @@ package vEngine.CultivationPath.system;
 import static org.lwjgl.glfw.GLFW.*;
 
 import vEngine.CultivationPath.controller.CPGameController;
+import vEngine.action.VActionInterface;
 import vEngine.controller.VGameController;
 import vEngine.controller.VInputListener;
-import vEngine.interfaces.VActionInterface;
 import vEngine.system.EntityManager;
 import vEngine.system.GameState;
 import vEngine.system.VEngine;

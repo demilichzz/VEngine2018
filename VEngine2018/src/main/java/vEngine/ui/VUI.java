@@ -12,13 +12,13 @@ import java.util.HashMap;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 
+import vEngine.action.VActionInterface;
 import vEngine.display.VText;
 import vEngine.display.VTexture;
 import vEngine.entities.VArea;
 import vEngine.entities.VEntity;
 import vEngine.global.Global;
 import vEngine.global.Imageconst;
-import vEngine.interfaces.VActionInterface;
 
 /**
  * @author Demilichzz

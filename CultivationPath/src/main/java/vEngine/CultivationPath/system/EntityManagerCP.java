@@ -8,10 +8,10 @@
  */
 package vEngine.CultivationPath.system;
 
+import vEngine.action.VActionInterface;
 import vEngine.display.VText;
 import vEngine.global.Global;
 import vEngine.global.VPropertiesLoader;
-import vEngine.interfaces.VActionInterface;
 import vEngine.interfaces.VXMLDataAdapter;
 import vEngine.io.VXMLData;
 import vEngine.io.XMLIO;
@@ -49,7 +49,7 @@ public class EntityManagerCP extends EntityManager{
 	{
 		VXMLData ui_xmlData = null;
 		try {
-			ui_xmlData = XMLIO.loadXML(VPropertiesLoader.getGlobalProperty("xml_path"));
+			ui_xmlData = XMLIO.loadXML(VPropertiesLoader.getProperty("Global","xml_path"));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -9,8 +9,8 @@ import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
 import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
 import static org.lwjgl.opengl.GL11.glBlendFunc;
 
+import vEngine.action.VActionInterface;
 import vEngine.controller.VGameController;
-import vEngine.interfaces.VActionInterface;
 import vEngine.controller.VMouseListener;
 
 /**

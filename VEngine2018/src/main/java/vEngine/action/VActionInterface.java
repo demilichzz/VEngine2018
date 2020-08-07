@@ -6,7 +6,7 @@
  * 时间：2012-3-1上午04:33:51
  * 版本：Ver 1.0
  */
-package vEngine.interfaces;
+package vEngine.action;
 
 /**
  * @author Demilichzz

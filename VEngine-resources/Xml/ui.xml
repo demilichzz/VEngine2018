@@ -2,7 +2,7 @@
 <root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<ui id="ui_test">
 		<imagestr>button_100x50_2.png</imagestr>
-		<locX>0</locX>
+		<locX>-100</locX>
 		<locY>0</locY>
 		<parentID>uiparent</parentID>
 		<transparency>1</transparency>
@@ -10,27 +10,29 @@
 		<visible>true</visible>
 		<enable>true</enable>
 		<text>ui_button_01</text>
-		<layout_type>4</layout_type>
+		<layout_type>7</layout_type>
 	</ui>
 	<ui id="ui_test2">
 		<imagestr>button_100x50_2.png</imagestr>
 		<locX>0</locX>
-		<locY>100</locY>
+		<locY>0</locY>
 		<parentID>uiparent</parentID>
 		<transparency>1</transparency>
 		<scale>1</scale>
 		<visible>true</visible>
 		<enable>true</enable>
+		<layout_type>7</layout_type>
 	</ui>
 	<ui id="ui_test3">
 		<imagestr>button_100x50_2.png</imagestr>
-		<locX>0</locX>
-		<locY>200</locY>
+		<locX>100</locX>
+		<locY>0</locY>
 		<parentID>uiparent</parentID>
 		<transparency>1</transparency>
 		<scale>1</scale>
 		<visible>true</visible>
 		<enable>true</enable>
 		<text>ui_button_02</text>
+		<layout_type>7</layout_type>
 	</ui>
 </root>

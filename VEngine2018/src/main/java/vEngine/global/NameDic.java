@@ -9,7 +9,6 @@
 package vEngine.global;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 import vEngine.io.JsonIO;

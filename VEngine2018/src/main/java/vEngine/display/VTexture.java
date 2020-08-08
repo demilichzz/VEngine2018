@@ -124,6 +124,10 @@ public class VTexture implements VRenderableInterface{
 		float ih = getTexture().getHeight();
 		//x2 = x2*scale;
 		//y2 = y2*scale;
+		x1 = Math.round(x1);
+		y1 = Math.round(y1);
+		x2 = Math.round(x2);
+		y2 = Math.round(y2);
 		
 		GL11.glColor4f(c.r,c.g,c.b,c.a);
 		//texture.bind();
@@ -147,6 +151,10 @@ public class VTexture implements VRenderableInterface{
 		float ih = getTexture().getHeight();
 		//x2 = x2*scale;
 		//y2 = y2*scale;
+		x1 = Math.round(x1);
+		y1 = Math.round(y1);
+		x2 = Math.round(x2);
+		y2 = Math.round(y2);
 		
 		GL11.glColor4f(c.r,c.g,c.b,c.a);
 		//texture.bind();

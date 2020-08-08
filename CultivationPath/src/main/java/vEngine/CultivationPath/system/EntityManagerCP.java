@@ -8,7 +8,10 @@
  */
 package vEngine.CultivationPath.system;
 
+import lombok.Data;
+import vEngine.CultivationPath.entities.CPMap;
 import vEngine.action.VActionInterface;
+import vEngine.controller.VInputListener;
 import vEngine.display.VText;
 import vEngine.global.Global;
 import vEngine.global.VPropertiesLoader;
@@ -24,8 +27,10 @@ import vEngine.ui.VUIFactory;
  * @author Demilichzz
  *
  */
+@Data
 public class EntityManagerCP extends EntityManager{
-	
+	protected CPMap map;
+		
 	public EntityManagerCP()
 	{
 		super();	//设定默认uiparent
@@ -71,6 +76,36 @@ public class EntityManagerCP extends EntityManager{
 				}	
 			}
 		});
+		
+		map = new CPMap("MapTile_test.png",3200,3200);
+		this.layer_background.add(map);
+	}
+    
+	/**
+	 * 响应键盘及手柄输入监听器的命令
+	 * @param commandkey usersetting定义的按键行为关键字
+	 * @param commandsts 按键状态
+	 */
+    @Override
+	public void command(String commandkey,int commandsts)
+	{
+		super.command(commandkey, commandsts);
+		if(commandsts==VInputListener.KEY_PRESS||commandsts==VInputListener.KEY_DOWN) {
+			switch(commandkey) {
+			case "KEY_UP":
+				getMap().mapMove(0, -1, 475);
+				break;
+			case "KEY_DOWN":
+				getMap().mapMove(0, 1, 475);
+				break;
+			case "KEY_LEFT":
+				getMap().mapMove(-1, 0, 475);
+				break;
+			case "KEY_RIGHT":
+				getMap().mapMove(1, 0, 475);
+				break;
+			}
+		}
 	}
 	
 	public void draw() {

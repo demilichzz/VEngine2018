@@ -6,6 +6,7 @@ import vEngine.display.VDisplay;
 import vEngine.global.Fontconst;
 import vEngine.global.Imageconst;
 import vEngine.global.NameDic;
+import vEngine.global.VMath;
 import vEngine.global.VPropertiesLoader;
 import vEngine.system.driver.Simulator;
 
@@ -49,6 +50,7 @@ public class VEngine {
 
 	public void initResource() {
 		VPropertiesLoader.init();
+		VMath.setRandomSeed(0);
 		NameDic.init();
 		Fontconst.Init();
 		VDisplay.getInstance().initGL(); // 初始化OpenGL参数

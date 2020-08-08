@@ -57,7 +57,7 @@ public class CPMain extends VEngine {
 		// VDisplay.getInstance().renderPrepare();
 		// GameState.getInstance().Render();
 		NameDic.addParamList(new String[] {"Charname","Classtype"});
-		System.out.println(NameDic.getNamedicValue("dialog_param_test", new String[]{"100","200"}));
+		//System.out.println(NameDic.getNamedicValue("dialog_param_test", new String[]{"100","200"}));
 	}
 
 	@Override

@@ -44,8 +44,8 @@ public class CPMap extends VEntity {
 				map[i][j] = VMath.GetRandomInt(0, 1);
 			}
 		}
-		axis_x = 1000.5;
-		axis_y = 1000.5;
+		axis_x = 1000;
+		axis_y = 1000;
 	}
 
 	public void setTexture(String texture) {

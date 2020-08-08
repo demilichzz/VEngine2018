@@ -8,11 +8,14 @@
  */
 package vEngine.CultivationPath.system;
 
+import org.newdawn.slick.opengl.Texture;
+
 import lombok.Data;
 import vEngine.CultivationPath.entities.CPMap;
 import vEngine.action.VActionInterface;
 import vEngine.controller.VInputListener;
 import vEngine.display.VText;
+import vEngine.display.VTexture;
 import vEngine.global.Global;
 import vEngine.global.VPropertiesLoader;
 import vEngine.interfaces.VXMLDataAdapter;
@@ -65,7 +68,7 @@ public class EntityManagerCP extends EntityManager{
 			ui_factory.setParams(new VXMLDataAdapter(ui));
 			ui_factory.creator("VMouseActionUI");
 		}
-		VUI ui = Global.getUIByID("ui_test");
+		VUI ui = Global.getUIByID("ui_test3");
 		ui.addAction(new VActionInterface() {
 			@Override
 			public void action(String args) {
@@ -93,16 +96,16 @@ public class EntityManagerCP extends EntityManager{
 		if(commandsts==VInputListener.KEY_PRESS||commandsts==VInputListener.KEY_DOWN) {
 			switch(commandkey) {
 			case "KEY_UP":
-				getMap().mapMove(0, -1, 475);
+				getMap().mapMove(0, -1, 500);
 				break;
 			case "KEY_DOWN":
-				getMap().mapMove(0, 1, 475);
+				getMap().mapMove(0, 1, 500);
 				break;
 			case "KEY_LEFT":
-				getMap().mapMove(-1, 0, 475);
+				getMap().mapMove(-1, 0, 500);
 				break;
 			case "KEY_RIGHT":
-				getMap().mapMove(1, 0, 475);
+				getMap().mapMove(1, 0, 500);
 				break;
 			}
 		}

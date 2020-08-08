@@ -58,7 +58,7 @@ public class CPGameController extends VGameController {
 		while (iterator.hasNext()) {
 			String key = (String) iterator.next();
 			int value = Integer.parseInt(user_setting.getProperty(key));
-			System.out.println(key + "=" + value);
+			//System.out.println(key + "=" + value);
 			VInputListener vil = new VInputListener(key, value);
 		}
 	}

@@ -3,7 +3,7 @@
 	<ui id="ui_test">
 		<imagestr>button_100x50_2.png</imagestr>
 		<locX>-100</locX>
-		<locY>0</locY>
+		<locY>-100</locY>
 		<parentID>uiparent</parentID>
 		<transparency>1</transparency>
 		<scale>1</scale>
@@ -15,7 +15,7 @@
 	<ui id="ui_test2">
 		<imagestr>button_100x50_2.png</imagestr>
 		<locX>0</locX>
-		<locY>0</locY>
+		<locY>-100</locY>
 		<parentID>uiparent</parentID>
 		<transparency>1</transparency>
 		<scale>1</scale>
@@ -26,13 +26,12 @@
 	<ui id="ui_test3">
 		<imagestr>button_100x50_2.png</imagestr>
 		<locX>100</locX>
-		<locY>0</locY>
+		<locY>-100</locY>
 		<parentID>uiparent</parentID>
 		<transparency>1</transparency>
 		<scale>1</scale>
 		<visible>true</visible>
 		<enable>true</enable>
-		<text>ui_button_02</text>
 		<layout_type>7</layout_type>
 	</ui>
 </root>

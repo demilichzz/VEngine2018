@@ -24,5 +24,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/VEngine2018"/>
+	<classpathentry kind="lib" path="D:/Workspace/VEngine2018/VEngine-resources/lib/slick-util3.jar"/>
+	<classpathentry kind="lib" path="D:/Workspace/VEngine2018/VEngine-resources/lib/slick.jar" sourcepath="D:/DevelopTools/slick.zip"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

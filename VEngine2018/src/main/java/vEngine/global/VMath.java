@@ -301,4 +301,23 @@ public class VMath {
 		}
 		return standardstate;
 	}
+	
+	
+	/**
+	 * 计算纹理边长
+	 * @param imageH
+	 * @param imageW
+	 * @return 大于imageHW最大值的最小2的n次方值
+	 */
+	public static double getTextureHw(double imageH,double imageW)
+	{
+		double value = Math.max(imageH, imageW);
+		int i=0;
+		while(Math.pow(2, i)<value)
+		{
+			i++;
+		}
+		value = Math.pow(2, i);
+		return value;
+	}
 }

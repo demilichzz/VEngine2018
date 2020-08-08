@@ -293,7 +293,16 @@ public class VUI extends VEntity implements VActionInterface {
 	}
 	public boolean getPointState(int x, int y) {
 		// TODO 获取目标坐标是否在此UI范围内
-		return area.ifvalid(x, y);
+		if(image==null)
+		{
+			return area.ifvalid(x, y);
+		}
+		else	// 获取纹理在指定坐标点的颜色是否为不透明，是则判断坐标在UI范围内
+		{
+			double x_diff = (x-getRealX())/scale;
+			double y_diff = (y-getRealY())/scale;
+			return image.getPointState(x_diff,y_diff,textureIndex);
+		}
 	}
 
 	public VUI getUIByID(String ID) {
